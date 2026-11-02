@@ -73,6 +73,11 @@
     .mk-line { fill: none; stroke: var(--c); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
     .mk-c-up { fill: #16c784; stroke: #16c784; stroke-width: 1; vector-effect: non-scaling-stroke; }
     .mk-c-down { fill: #ea3943; stroke: #ea3943; stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .mk-plot { position: relative; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+    .mk-cross { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(192, 192, 192, 0.4); pointer-events: none; }
+    .mk-dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--c); border: 2px solid #000; transform: translate(-50%, -50%); pointer-events: none; }
+    .mk-tip { position: absolute; top: 0; transform: translateX(-50%); display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; background: #111; border: 1px solid rgba(192, 192, 192, 0.4); font-size: 11px; color: #9ca3af; white-space: nowrap; pointer-events: none; }
+    .mk-tip b { font-size: 13px; font-weight: 400; color: #fff; }
     .mk-up { color: #16c784; }
     .mk-down { color: #ea3943; }
 
@@ -134,47 +139,47 @@
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Cash</span>
-            <span id="i-cash"></span>
+            <span class="flex items-center space-x-2"><span id="i-cash"></span><button onclick="editInfo('info_cash')" aria-label="Edit cash" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Withdraw</span>
-            <span id="i-withdrawn"></span>
+            <span class="flex items-center space-x-2"><span id="i-withdrawn"></span><button onclick="editInfo('info_withdrawn')" aria-label="Edit withdraw" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total USDT</span>
-            <span id="i-usdt"></span>
+            <span class="flex items-center space-x-2"><span id="i-usdt"></span><button onclick="editInfo('info_total_usdt')" aria-label="Edit total USDT" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total One Coin</span>
-            <span id="i-total"></span>
+            <span class="flex items-center space-x-2"><span id="i-total"></span><button onclick="editInfo('info_total_one')" aria-label="Edit total One Coin" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Value</span>
-            <span id="i-value"></span>
+            <span class="flex items-center space-x-2"><span id="i-value"></span><button onclick="editInfo('info_total_value')" aria-label="Edit total value" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>One Coin Price</span>
-            <span id="i-price"></span>
+            <span class="flex items-center space-x-2"><span id="i-price"></span><button onclick="editPrice()" aria-label="Edit price" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total User 24H</span>
-            <span id="i-users24"></span>
+            <span class="flex items-center space-x-2"><span id="i-users24"></span><button onclick="editInfo('info_users_24h')" aria-label="Edit users 24h" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total User</span>
-            <span id="i-users"></span>
+            <span class="flex items-center space-x-2"><span id="i-users"></span><button onclick="editInfo('info_users')" aria-label="Edit users" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
           </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-5 gap-2">
+      <div class="grid grid-cols-4 gap-2">
         <button onclick="openPage('users')" aria-label="User" class="panel aspect-square md:aspect-auto md:h-24 flex items-center justify-center hover:opacity-80 transition">
           <svg class="icon" viewBox="0 0 24 24">
             <circle cx="12" cy="8" r="4"/>
@@ -186,13 +191,6 @@
             <rect x="2" y="6" width="20" height="12" rx="1"/>
             <circle cx="12" cy="12" r="2.8"/>
             <path d="M5.5 9.5v.01M18.5 14.5v.01"/>
-          </svg>
-        </button>
-        <button onclick="openPage('price')" aria-label="Price" class="panel aspect-square md:aspect-auto md:h-24 flex items-center justify-center hover:opacity-80 transition">
-          <svg class="icon" viewBox="0 0 24 24">
-            <path d="M3 3v18h18"/>
-            <path d="M7 15l4-4 3 3 6-7"/>
-            <path d="M15 7h5v5"/>
           </svg>
         </button>
         <button onclick="openPage('requests')" aria-label="Requests" class="panel aspect-square md:aspect-auto md:h-24 flex items-center justify-center hover:opacity-80 transition">
@@ -249,36 +247,6 @@
       <div id="withdraw-list" class="space-y-2"></div>
     </div>
 
-    <div id="page-price" class="hidden space-y-3">
-      <div class="panel p-3 space-y-2">
-        <div class="flex justify-between text-sm">
-          <span class="text-gray-300">One Coin Price</span>
-          <span id="price-current" class="text-white"></span>
-        </div>
-        <input id="price-input" type="text" inputmode="decimal" oninput="decimalOnly(this)" placeholder="$" class="field w-full text-base text-white p-3 focus:outline-none">
-        <button onclick="savePrice()" class="w-full py-3 bg-white text-black text-sm hover:bg-gray-200 active:scale-95 transition">Save</button>
-      </div>
-
-      <div class="panel p-3 space-y-2">
-        <div class="text-sm text-gray-300">Price movement range</div>
-        <select id="pe-enabled" class="field w-full text-base text-white p-3 focus:outline-none">
-          <option value="1">Enabled</option>
-          <option value="0">Disabled</option>
-        </select>
-        <div class="grid grid-cols-2 gap-2">
-          <input id="pe-min" type="text" inputmode="decimal" oninput="decimalOnly(this)" placeholder="From $" class="field w-full text-base text-white p-3 focus:outline-none">
-          <input id="pe-max" type="text" inputmode="decimal" oninput="decimalOnly(this)" placeholder="To $" class="field w-full text-base text-white p-3 focus:outline-none">
-        </div>
-        <div id="pe-status" class="text-xs text-gray-400"></div>
-        <button onclick="saveRange()" class="w-full py-3 bg-white text-black text-sm hover:bg-gray-200 active:scale-95 transition">Save</button>
-      </div>
-
-      <div class="panel p-3 space-y-2">
-        <div class="text-sm text-gray-300">Generate price history</div>
-        <input id="pe-days" type="text" inputmode="numeric" oninput="digitsOnly(this)" placeholder="Days (1-365)" class="field w-full text-base text-white p-3 focus:outline-none">
-        <button onclick="backfill()" class="w-full py-3 bg-white text-black text-sm hover:bg-gray-200 active:scale-95 transition">Generate</button>
-      </div>
-    </div>
 
     <div id="page-market" class="hidden space-y-3" data-dir="up">
       <div class="panel p-3 flex items-center justify-between">
@@ -290,52 +258,75 @@
           </div>
         </div>
         <div class="text-right space-y-1">
-          <div class="flex items-center justify-end space-x-2"><span id="am-price" class="text-lg text-white"></span><button onclick="editMarket('price')" aria-label="Edit price" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div>
+          <div class="flex items-center justify-end space-x-2"><span id="am-price" class="text-lg text-white"></span><button onclick="editPrice()" aria-label="Edit price" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div>
           <div id="am-change" class="text-sm"></div>
         </div>
       </div>
 
-      <div class="panel p-3 mk-window">
-        <svg id="am-chart" class="mk-svg" viewBox="0 0 100 40" preserveAspectRatio="none"></svg>
+      <div class="panel p-3 space-y-2">
+        <div class="text-sm text-gray-300">Price calculator</div>
+        <div class="grid grid-cols-2 gap-2">
+          <input id="pc-min" type="text" inputmode="decimal" autocomplete="off" oninput="decimalOnly(this)" placeholder="From $" class="field w-full text-base text-white p-3 focus:outline-none">
+          <input id="pc-max" type="text" inputmode="decimal" autocomplete="off" oninput="decimalOnly(this)" placeholder="To $" class="field w-full text-base text-white p-3 focus:outline-none">
+        </div>
+        <select id="pc-days" class="field w-full text-base text-white p-3 focus:outline-none">
+          <option value="1">1 day</option>
+          <option value="3">3 days</option>
+          <option value="7" selected>1 week</option>
+          <option value="14">2 weeks</option>
+          <option value="30">1 month</option>
+          <option value="90">3 months</option>
+        </select>
+        <div id="pc-status" class="text-xs text-gray-400"></div>
+        <div class="flex space-x-2">
+          <button onclick="stopCalc()" class="field flex-1 py-3 text-white text-sm hover:opacity-80 transition">Stop</button>
+          <button onclick="startCalc()" class="flex-1 py-3 bg-white text-black text-sm hover:bg-gray-200 active:scale-95 transition">Start</button>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <input id="pc-hist" type="text" inputmode="numeric" autocomplete="off" oninput="digitsOnly(this)" placeholder="History days" class="field col-span-2 w-full text-base text-white p-3 focus:outline-none">
+          <button onclick="backfill()" class="field py-3 text-white text-sm hover:opacity-80 transition">Generate</button>
+        </div>
+      </div>
+
+      <div class="panel p-3 mk-window relative">
+        <button onclick="toggleChart()" aria-label="Chart type" class="field absolute top-3 right-3 w-9 h-9 flex items-center justify-center z-10 hover:opacity-80 transition">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M7 3.5v3M7 17.5v3" stroke="#16c784"/><rect x="5" y="6.5" width="4" height="11" fill="#16c784" stroke="#16c784"/><path d="M17 7.5v2.5M17 18v2.5" stroke="#ea3943"/><rect x="15" y="10" width="4" height="8" fill="#ea3943" stroke="#ea3943"/></svg>
+        </button>
+        <div id="am-plot" class="mk-plot">
+          <svg id="am-chart" class="mk-svg" viewBox="0 0 100 40" preserveAspectRatio="none"></svg>
+          <div id="am-cross" class="mk-cross hidden"></div>
+          <div id="am-dot" class="mk-dot hidden"></div>
+          <div id="am-tip" class="mk-tip hidden"></div>
+        </div>
         <div class="flex justify-between text-xs text-gray-400 mt-2">
           <span>Low <b id="am-low" class="text-white font-normal"></b></span>
           <span>High <b id="am-high" class="text-white font-normal"></b></span>
         </div>
       </div>
 
-      <div class="flex items-center justify-between">
-        <div class="flex space-x-1"><button id="ar-1D" onclick="setRange('1D')" class="tab px-3 py-2 text-xs">1D</button><button id="ar-7D" onclick="setRange('7D')" class="tab px-3 py-2 text-xs">7D</button><button id="ar-1M" onclick="setRange('1M')" class="tab px-3 py-2 text-xs active">1M</button><button id="ar-1Y" onclick="setRange('1Y')" class="tab px-3 py-2 text-xs">1Y</button><button id="ar-ALL" onclick="setRange('ALL')" class="tab px-3 py-2 text-xs">ALL</button></div>
-        <button onclick="toggleChart()" aria-label="Chart type" class="field w-10 h-10 flex items-center justify-center hover:opacity-80 transition">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M7 3.5v3M7 17.5v3" stroke="#16c784"/><rect x="5" y="6.5" width="4" height="11" fill="#16c784" stroke="#16c784"/><path d="M17 7.5v2.5M17 18v2.5" stroke="#ea3943"/><rect x="15" y="10" width="4" height="8" fill="#ea3943" stroke="#ea3943"/></svg>
-        </button>
-      </div>
+      <div class="flex"><button id="ar-1D" onclick="setRange('1D')" class="tab flex-1 py-3 text-xs">1D</button><button id="ar-7D" onclick="setRange('7D')" class="tab flex-1 py-3 text-xs">7D</button><button id="ar-1M" onclick="setRange('1M')" class="tab flex-1 py-3 text-xs active">1M</button><button id="ar-1Y" onclick="setRange('1Y')" class="tab flex-1 py-3 text-xs">1Y</button><button id="ar-ALL" onclick="setRange('ALL')" class="tab flex-1 py-3 text-xs">ALL</button></div>
 
       <div class="panel p-3">
         <div class="text-xs text-gray-400 mb-2">Performance</div>
         <div class="grid grid-cols-4 gap-2 text-center text-xs text-gray-400">
-          <div>24h<div id="am-d1" class="text-sm"></div></div>
-          <div>7d<div id="am-d7" class="text-sm"></div></div>
-          <div>30d<div id="am-d30" class="text-sm"></div></div>
-          <div>1y<div id="am-y1" class="text-sm"></div></div>
+          <div>24h<div class="flex items-center justify-center space-x-1 mt-1"><span id="am-d1" class="text-sm"></span><button onclick="editStat('d1')" aria-label="Edit 24h" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div></div>
+          <div>7d<div class="flex items-center justify-center space-x-1 mt-1"><span id="am-d7" class="text-sm"></span><button onclick="editStat('d7')" aria-label="Edit 7d" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div></div>
+          <div>30d<div class="flex items-center justify-center space-x-1 mt-1"><span id="am-d30" class="text-sm"></span><button onclick="editStat('d30')" aria-label="Edit 30d" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div></div>
+          <div>1y<div class="flex items-center justify-center space-x-1 mt-1"><span id="am-y1" class="text-sm"></span><button onclick="editStat('y1')" aria-label="Edit 1y" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div></div>
         </div>
       </div>
 
       <div class="panel p-3">
         <div class="text-xs text-gray-400 mb-1">Statistics</div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Market cap</span><span class="flex items-center space-x-2"><span id="am-cap"></span></span></div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Fully diluted value</span><span class="flex items-center space-x-2"><span id="am-fdv"></span></span></div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">24h volume</span><span class="flex items-center space-x-2"><span id="am-vol"></span><button onclick="editMarket('volume')" aria-label="Edit volume" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Circulating supply</span><span class="flex items-center space-x-2"><span id="am-circ"></span><button onclick="editMarket('circulating')" aria-label="Edit circulating supply" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Max supply</span><span class="flex items-center space-x-2"><span id="am-max"></span><button onclick="editMarket('max')" aria-label="Edit max supply" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Holders</span><span class="flex items-center space-x-2"><span id="am-holders"></span></span></div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">All-time high</span><span class="flex items-center space-x-2"><span id="am-ath"></span></span></div>
-        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">All-time low</span><span class="flex items-center space-x-2"><span id="am-atl"></span></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Market cap</span><span class="flex items-center space-x-2"><span id="am-cap"></span><button onclick="editStat('market_cap')" aria-label="Edit market cap" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Fully diluted value</span><span class="flex items-center space-x-2"><span id="am-fdv"></span><button onclick="editStat('fdv')" aria-label="Edit fully diluted value" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">24h volume</span><span class="flex items-center space-x-2"><span id="am-vol"></span><button onclick="editStat('volume_24h')" aria-label="Edit volume" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Circulating supply</span><span class="flex items-center space-x-2"><span id="am-circ"></span><button onclick="editStat('circulating_supply')" aria-label="Edit circulating supply" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Max supply</span><span class="flex items-center space-x-2"><span id="am-max"></span><button onclick="editStat('max_supply')" aria-label="Edit max supply" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Holders</span><span class="flex items-center space-x-2"><span id="am-holders"></span><button onclick="editStat('holders')" aria-label="Edit holders" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">All-time high</span><span class="flex items-center space-x-2"><span id="am-ath"></span><button onclick="editStat('ath')" aria-label="Edit all-time high" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
+        <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">All-time low</span><span class="flex items-center space-x-2"><span id="am-atl"></span><button onclick="editStat('atl')" aria-label="Edit all-time low" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
         <div class="flex justify-between items-center py-2 text-sm text-white"><span class="text-gray-300">Visible in app</span><span class="flex items-center space-x-2"><span id="am-enabled"></span><button onclick="toggleVisible()" aria-label="Toggle visibility" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span></div>
-      </div>
-
-      <div class="panel p-3 space-y-2">
-        <div class="flex items-center justify-between"><span class="text-xs text-gray-400">About</span><button onclick="editMarket('about')" aria-label="Edit about" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></div>
-        <div id="am-about" class="text-sm text-white whitespace-pre-wrap"></div>
       </div>
 
       <div class="panel p-3 space-y-2">
@@ -380,9 +371,9 @@
     <div class="panel p-4 w-full max-w-sm space-y-3">
       <div id="edit-title" class="text-sm text-white"></div>
       <input id="edit-input" type="text" autocomplete="off" onkeydown="if (event.key === 'Enter') saveEdit()" class="field w-full text-base text-white p-3 focus:outline-none">
-      <textarea id="edit-area" rows="5" maxlength="600" class="hidden field w-full text-base text-white p-3 focus:outline-none"></textarea>
       <div class="flex space-x-2">
         <button onclick="closeEditModal()" class="field flex-1 py-3 text-white text-sm hover:opacity-80 transition">Cancel</button>
+        <button id="edit-auto" onclick="autoEdit()" class="hidden field flex-1 py-3 text-white text-sm hover:opacity-80 transition">Auto</button>
         <button onclick="saveEdit()" class="flex-1 py-3 bg-white text-black text-sm hover:bg-gray-200 active:scale-95 transition">Save</button>
       </div>
     </div>
@@ -403,8 +394,8 @@
   <script>
     const SB_URL = 'https://fdrrjbchooqlpijujaed.supabase.co';
     const SB_KEY = 'sb_publishable_XW3_8K4gpjX9ph02phJDqQ_RQCRBNNm';
-    const PAGES = ['home', 'users', 'user', 'withdraw', 'price', 'requests', 'market'];
-    const TITLES = { price: 'Price', requests: 'Requests', market: 'Market' };
+    const PAGES = ['home', 'users', 'user', 'withdraw', 'requests', 'market'];
+    const TITLES = { requests: 'Requests', market: 'Market' };
     let adminToken = '';
     let page = 'home';
     let price = 0;
@@ -419,7 +410,9 @@
     let chartType = 'line';
     let marketData = null;
     let marketAdmin = null;
-    let editKey = '';
+    let editCtx = null;
+    let infoData = null;
+    let tipActive = false;
 
     const $ = id => document.getElementById(id);
 
@@ -459,8 +452,12 @@
       el.value = el.value.replace(/\D/g, '');
     }
 
-    function decimalOnly(el) {
-      el.value = el.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    function decimalOnly(el, signed) {
+      el.value = el.value
+        .replace(/,/g, '.')
+        .replace(signed ? /[^0-9.\-]/g : /[^0-9.]/g, '')
+        .replace(/(?!^)-/g, '')
+        .replace(/(\..*)\./g, '$1');
     }
 
     function pickAmount(v) {
@@ -483,23 +480,32 @@
     }
 
     function fmtUsd(n) {
-      return `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      return `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 8 })}`;
     }
 
     function infoOpen() {
       return !$('info').classList.contains('hidden');
     }
 
+    function manual(id, key, overrides) {
+      const el = $(id);
+      if (overrides.includes(key)) el.innerText += ' *';
+    }
+
     function renderInfo(i) {
+      infoData = i;
       price = Number(i.price);
-      $('i-total').innerText = Number(i.total_one).toLocaleString('en-US', { minimumFractionDigits: 3, maximumFractionDigits: 9 });
       $('i-cash').innerText = fmtUsd(i.cash);
       $('i-withdrawn').innerText = fmtUsd(i.withdrawn);
       $('i-usdt').innerText = fmtUsd(i.total_usdt);
+      $('i-total').innerText = Number(i.total_one).toLocaleString('en-US', { minimumFractionDigits: 3, maximumFractionDigits: 9 });
       $('i-value').innerText = fmtUsd(i.total_value);
       $('i-price').innerText = fmtPrice(price);
       $('i-users').innerText = Number(i.users).toLocaleString();
       $('i-users24').innerText = Number(i.users_24h).toLocaleString();
+      [['i-cash', 'info_cash'], ['i-withdrawn', 'info_withdrawn'], ['i-usdt', 'info_total_usdt'], ['i-total', 'info_total_one'],
+       ['i-value', 'info_total_value'], ['i-users', 'info_users'], ['i-users24', 'info_users_24h']]
+        .forEach(([id, key]) => manual(id, key, i.overrides));
     }
 
     async function refreshInfo() {
@@ -534,10 +540,6 @@
       if (name === 'withdraw') loadWithdrawals();
       if (name === 'user') renderUser();
       if (name === 'market') loadMarketAdmin();
-      if (name === 'price') {
-        $('price-current').innerText = fmtPrice(price);
-        loadPriceAdmin();
-      }
     }
 
     function openPage(name) {
@@ -605,23 +607,34 @@
       openPage('user');
     }
 
+    const USER_FIELDS = {
+      withdrawn: ['Total withdraw ($)', 'total_withdraw', false],
+      usdt: ['Total USDT', 'usdt', false],
+      one: ['Total One Coin', 'one', false],
+      op: ['Total One Point', 'op', false],
+      invites: ['Invite friends', 'invites', false],
+      mining: ['Mining (GH/s)', 'mining', false],
+      username: ['Username', 'username', true],
+      code: ['ID', 'code', true]
+    };
+
     function renderUser() {
       const box = $('page-user');
       const u = currentUser;
       if (!u) { box.innerHTML = ''; return; }
       const pencil = (action, label) => `<button onclick="${action}" aria-label="${label}" class="field w-8 h-8 flex items-center justify-center hover:opacity-80 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>`;
-      const row = (label, value, extra = '') => `<div class="flex justify-between items-center py-3 text-base text-white"><span>${label}</span><span class="flex items-center space-x-2 text-right break-all"><span>${value}</span>${extra}</span></div>`;
+      const row = (label, value, action) => `<div class="flex justify-between items-center py-3 text-base text-white"><span>${label}</span><span class="flex items-center space-x-2 text-right break-all"><span>${value}</span>${pencil(action, 'Edit ' + label)}</span></div>`;
       const rows = [
-        row('Total Withdraw', esc(fmtUsd(u.total_withdraw))),
-        row('Total USDT', esc(fmtUsd(u.usdt))),
-        row('Total One Coin', Number(u.one).toFixed(9)),
-        row('Total One Point', Number(u.op).toLocaleString()),
-        row('Invite Friend', esc(Number(u.invites).toLocaleString())),
-        row('Mining', esc(`${u.mining} GH/s`)),
-        row('Wallet', esc(u.addr || '-'), pencil('openAddrModal()', 'Edit wallet')),
-        row('Username', esc(u.username)),
-        row('ID', esc(u.code)),
-        row('Password', esc(u.password), pencil('openPwModal()', 'Edit password'))
+        row('Total Withdraw', esc(fmtUsd(u.total_withdraw)), "editUser('withdrawn')"),
+        row('Total USDT', esc(fmtUsd(u.usdt)), "editUser('usdt')"),
+        row('Total One Coin', Number(u.one).toFixed(9), "editUser('one')"),
+        row('Total One Point', Number(u.op).toLocaleString(), "editUser('op')"),
+        row('Invite Friend', esc(Number(u.invites).toLocaleString()), "editUser('invites')"),
+        row('Mining', esc(`${u.mining} GH/s`), "editUser('mining')"),
+        row('Wallet', esc(u.addr || '-'), 'openAddrModal()'),
+        row('Username', esc(u.username), "editUser('username')"),
+        row('ID', esc(u.code), "editUser('code')"),
+        row('Password', esc(u.password), 'openPwModal()')
       ];
       box.innerHTML = rows.join('<div class="sep"></div>');
     }
@@ -775,21 +788,6 @@
       if (infoOpen()) refreshInfo();
     }
 
-    async function savePrice() {
-      const value = $('price-input').value.replace(/[$,\s]/g, '');
-      if (!/^(\d+\.?\d*|\.\d+)$/.test(value)) {
-        show('Invalid price', false);
-        return;
-      }
-      try {
-        price = Number(await call('oc_admin_set_price', { p_price: value }));
-      } catch (e) {
-        show(e.message, false);
-        return;
-      }
-      $('price-current').innerText = fmtPrice(price);
-      show(`Price set to ${fmtPrice(price)}`, true);
-    }
 
     async function grant() {
       if (!amount) {
@@ -833,8 +831,8 @@
     }
 
     function numberValue(id) {
-      const value = $(id).value.trim();
-      if (!/^(\d+\.?\d*|\.\d+)$/.test(value)) throw new Error('Enter valid numbers');
+      const value = $(id).value.trim().replace(',', '.');
+      if (!/^-?(\d+\.?\d*|\.\d+)$/.test(value)) throw new Error('Enter valid numbers');
       return value;
     }
 
@@ -852,38 +850,179 @@
       el.classList.toggle('mk-down', !up);
     }
 
-    const compact = new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 2 });
-
-    async function loadPriceAdmin() {
-      try {
-        const e = await call('oc_admin_price_engine');
-        $('pe-enabled').value = e.enabled ? '1' : '0';
-        $('pe-min').value = e.min === null ? '' : plain(e.min);
-        $('pe-max').value = e.max === null ? '' : plain(e.max);
-        $('pe-status').innerText = `Last update: ${e.last_tick}`;
-      } catch (e) {
-        show(e.message, false);
-      }
+    function big(n, usd) {
+      const v = Number(n);
+      const text = v >= 1000 ? compact.format(v) : v.toLocaleString('en-US', { maximumFractionDigits: 8 });
+      return usd ? `$${text}` : text;
     }
 
-    async function saveRange() {
-      const enabled = $('pe-enabled').value === '1';
+    const compact = new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 2 });
+
+    function openEdit(ctx) {
+      const input = $('edit-input');
+      editCtx = ctx;
+      $('edit-title').innerText = ctx.title;
+      input.inputMode = ctx.mode === 'decimal' ? 'decimal' : 'text';
+      input.oninput = ctx.mode === 'decimal' ? () => decimalOnly(input, ctx.signed) : null;
+      input.value = ctx.value;
+      $('edit-auto').classList.toggle('hidden', !ctx.clear);
+      $('edit-modal').classList.remove('hidden');
+      input.focus();
+    }
+
+    function closeEditModal() {
+      $('edit-modal').classList.add('hidden');
+      $('edit-input').value = '';
+      editCtx = null;
+    }
+
+    async function runEdit(action) {
+      const ctx = editCtx;
+      if (!ctx) return;
       try {
-        await call('oc_admin_price_range', {
-          p_enabled: enabled,
-          p_min: enabled ? numberValue('pe-min') : null,
-          p_max: enabled ? numberValue('pe-max') : null
-        });
-        show('Range saved', true);
+        await action(ctx);
       } catch (e) {
         show(e.message, false);
         return;
       }
-      loadPriceAdmin();
+      closeEditModal();
+      show('Saved', true);
+      await ctx.done();
+    }
+
+    function saveEdit() {
+      return runEdit(ctx => ctx.save(ctx.mode === 'decimal' ? numberValue('edit-input') : $('edit-input').value.trim()));
+    }
+
+    function autoEdit() {
+      return runEdit(ctx => ctx.clear());
+    }
+
+    const INFO_FIELDS = {
+      info_cash: ['Cash ($)', 'cash'],
+      info_withdrawn: ['Withdraw ($)', 'withdrawn'],
+      info_total_one: ['Total One Coin', 'total_one'],
+      info_total_usdt: ['Total USDT', 'total_usdt'],
+      info_total_value: ['Total value ($)', 'total_value'],
+      info_users: ['Users', 'users'],
+      info_users_24h: ['Users (24h)', 'users_24h']
+    };
+
+    function editInfo(key) {
+      if (!infoData) return;
+      const [title, field] = INFO_FIELDS[key];
+      openEdit({
+        title,
+        mode: 'decimal',
+        value: plain(infoData[field]),
+        save: v => call('oc_admin_override', { p_key: key, p_value: v }),
+        clear: () => call('oc_admin_override', { p_key: key, p_value: null }),
+        done: refreshInfo
+      });
+    }
+
+    function editPrice() {
+      openEdit({
+        title: 'One Coin price ($)',
+        mode: 'decimal',
+        value: plain(marketData ? marketData.price : price),
+        save: v => call('oc_admin_set_price', { p_price: v }),
+        done: async () => {
+          await refreshInfo();
+          if (page === 'market') await loadMarketAdmin();
+        }
+      });
+    }
+
+    const STAT_FIELDS = {
+      market_cap: ['Market cap ($)', m => m.market_cap, false],
+      fdv: ['Fully diluted value ($)', m => m.fdv, false],
+      volume_24h: ['24h volume ($)', m => m.volume_24h, false],
+      circulating_supply: ['Circulating supply', m => m.circulating_supply, false],
+      max_supply: ['Max supply', m => m.max_supply, false],
+      holders: ['Holders', m => m.holders, false],
+      ath: ['All-time high ($)', m => m.ath, false],
+      atl: ['All-time low ($)', m => m.atl, false],
+      d1: ['24h change (%)', m => m.changes.d1, true],
+      d7: ['7d change (%)', m => m.changes.d7, true],
+      d30: ['30d change (%)', m => m.changes.d30, true],
+      y1: ['1y change (%)', m => m.changes.y1, true]
+    };
+
+    function editStat(key) {
+      if (!marketData) return;
+      const [title, read, signed] = STAT_FIELDS[key];
+      openEdit({
+        title,
+        mode: 'decimal',
+        signed,
+        value: plain(read(marketData)),
+        save: v => call('oc_admin_override', { p_key: key, p_value: v }),
+        clear: () => call('oc_admin_override', { p_key: key, p_value: null }),
+        done: loadMarketAdmin
+      });
+    }
+
+    function editUser(field) {
+      if (!currentUser) return;
+      const [title, key, text] = USER_FIELDS[field];
+      let target = currentUser.username;
+      openEdit({
+        title,
+        mode: text ? 'text' : 'decimal',
+        value: text ? String(currentUser[key]) : plain(currentUser[key]),
+        save: async v => {
+          await call('oc_admin_user_set', { p_user: currentUser.username, p_field: field, p_value: v });
+          if (field === 'username') target = v.toLowerCase();
+        },
+        done: async () => {
+          const rows = await call('oc_admin_users', { p_q: target });
+          const fresh = rows.find(r => r.username === target);
+          if (fresh) currentUser = fresh;
+          renderUser();
+        }
+      });
+    }
+
+    async function loadCalc() {
+      try {
+        const e = await call('oc_admin_price_engine');
+        $('pc-min').value = e.min === null ? '' : plain(e.min);
+        $('pc-max').value = e.max === null ? '' : plain(e.max);
+        $('pc-status').innerText = e.running ? `Running until ${e.ends}` : 'Stopped';
+      } catch (e) {
+        show(e.message, false);
+      }
+    }
+
+    async function startCalc() {
+      try {
+        await call('oc_admin_price_range', {
+          p_min: numberValue('pc-min'),
+          p_max: numberValue('pc-max'),
+          p_days: $('pc-days').value
+        });
+        show('Calculator started', true);
+      } catch (e) {
+        show(e.message, false);
+        return;
+      }
+      loadMarketAdmin();
+    }
+
+    async function stopCalc() {
+      try {
+        await call('oc_admin_price_stop');
+        show('Calculator stopped', true);
+      } catch (e) {
+        show(e.message, false);
+        return;
+      }
+      loadMarketAdmin();
     }
 
     async function backfill() {
-      const days = $('pe-days').value.trim();
+      const days = $('pc-hist').value.trim();
       if (!/^\d+$/.test(days)) {
         show('Enter days (1-365)', false);
         return;
@@ -894,7 +1033,9 @@
         show('History generated', true);
       } catch (e) {
         show(e.message, false);
+        return;
       }
+      loadMarketAdmin();
     }
 
     async function loadMarketAdmin() {
@@ -909,6 +1050,7 @@
       } catch (e) {
         show(e.message, false);
       }
+      loadCalc();
     }
 
     function drawChart() {
@@ -923,6 +1065,28 @@
       $('am-chart').innerHTML = grid + body;
     }
 
+    function showTip(e) {
+      if (!marketData) return;
+      const rect = $('am-plot').getBoundingClientRect();
+      const frac = Math.min(0.999, Math.max(0, (e.clientX - rect.left) / rect.width));
+      const candles = chartType === 'candles';
+      const list = candles ? marketData.candles : marketData.points;
+      const p = list[Math.floor(frac * list.length)];
+      $('am-cross').style.left = `${p.x}%`;
+      const dot = $('am-dot');
+      dot.style.left = `${p.x}%`;
+      dot.style.top = `${p.ty}%`;
+      const tip = $('am-tip');
+      tip.innerHTML = `<b>${esc(fmtPrice(candles ? p.c : p.price))}</b><span>${esc(p.at)}</span>`;
+      tip.style.left = `${Math.min(80, Math.max(20, p.x))}%`;
+      ['am-cross', 'am-dot', 'am-tip'].forEach(id => $(id).classList.remove('hidden'));
+    }
+
+    function hideTip() {
+      tipActive = false;
+      ['am-cross', 'am-dot', 'am-tip'].forEach(id => $(id).classList.add('hidden'));
+    }
+
     function renderAdminMarket() {
       const m = marketData;
       const a = marketAdmin;
@@ -935,19 +1099,15 @@
       $('am-low').innerText = fmtPrice(m.low);
       $('am-high').innerText = fmtPrice(m.high);
       [['d1', 'am-d1'], ['d7', 'am-d7'], ['d30', 'am-d30'], ['y1', 'am-y1']].forEach(([key, id]) => {
-        $(id).innerText = percent(m.changes[key]);
+        $(id).innerText = percent(m.changes[key]) + (a.overrides.includes(key) ? ' *' : '');
         tint($(id), Number(m.changes[key]) >= 0);
       });
-      $('am-cap').innerText = `$${compact.format(m.market_cap)}`;
-      $('am-fdv').innerText = `$${compact.format(m.fdv)}`;
-      $('am-vol').innerText = `$${compact.format(m.volume_24h)}`;
-      $('am-circ').innerText = compact.format(m.circulating_supply);
-      $('am-max').innerText = compact.format(m.max_supply);
-      $('am-holders').innerText = Number(m.holders).toLocaleString('en-US');
-      $('am-ath').innerText = fmtPrice(m.ath);
-      $('am-atl').innerText = fmtPrice(m.atl);
+      [['am-cap', 'market_cap', true], ['am-fdv', 'fdv', true], ['am-vol', 'volume_24h', true], ['am-circ', 'circulating_supply', false],
+       ['am-max', 'max_supply', false], ['am-ath', 'ath', true], ['am-atl', 'atl', true]].forEach(([id, key, usd]) => {
+        $(id).innerText = big(m[key], usd) + (a.overrides.includes(key) ? ' *' : '');
+      });
+      $('am-holders').innerText = Number(m.holders).toLocaleString('en-US') + (a.overrides.includes('holders') ? ' *' : '');
       $('am-enabled').innerText = a.enabled ? 'Yes' : 'No';
-      $('am-about').innerText = a.about;
       $('am-history').innerHTML = a.history.length
         ? a.history.map(historyHtml).join('')
         : '<div class="text-center text-gray-500 text-xs py-2">No price points.</div>';
@@ -972,79 +1132,10 @@
       if (marketData) drawChart();
     }
 
-    const EDITS = {
-      price: { title: 'One Coin price ($)', numeric: true, value: () => plain(marketData.price) },
-      circulating: { title: 'Circulating supply', numeric: true, value: () => plain(marketAdmin.circulating_supply) },
-      max: { title: 'Max supply', numeric: true, value: () => plain(marketAdmin.max_supply) },
-      volume: { title: '24h volume ($)', numeric: true, value: () => plain(marketAdmin.volume_24h) },
-      about: { title: 'About', numeric: false, value: () => marketAdmin.about }
-    };
-
-    function editMarket(key) {
-      if (!marketData || !marketAdmin) return;
-      const cfg = EDITS[key];
-      const input = $('edit-input');
-      const area = $('edit-area');
-      editKey = key;
-      $('edit-title').innerText = cfg.title;
-      input.classList.toggle('hidden', key === 'about');
-      area.classList.toggle('hidden', key !== 'about');
-      input.inputMode = cfg.numeric ? 'decimal' : 'text';
-      input.oninput = cfg.numeric ? () => decimalOnly(input) : null;
-      input.value = key === 'about' ? '' : cfg.value();
-      area.value = key === 'about' ? cfg.value() : '';
-      $('edit-modal').classList.remove('hidden');
-      (key === 'about' ? area : input).focus();
-    }
-
-    function closeEditModal() {
-      $('edit-modal').classList.add('hidden');
-      $('edit-input').value = '';
-      $('edit-area').value = '';
-      editKey = '';
-    }
-
-    function saveMarketFields(fields) {
-      return call('oc_admin_market_set', {
-        p_enabled: fields.enabled,
-        p_circulating: fields.circulating,
-        p_max: fields.max,
-        p_volume: fields.volume,
-        p_about: fields.about
-      });
-    }
-
-    function currentFields() {
-      const a = marketAdmin;
-      return { enabled: a.enabled, circulating: a.circulating_supply, max: a.max_supply, volume: a.volume_24h, about: a.about };
-    }
-
-    async function saveEdit() {
-      const key = editKey;
-      if (!key) return;
-      try {
-        if (key === 'price') {
-          await call('oc_admin_set_price', { p_price: numberValue('edit-input') });
-        } else {
-          const fields = currentFields();
-          fields[key] = key === 'about' ? $('edit-area').value : numberValue('edit-input');
-          await saveMarketFields(fields);
-        }
-      } catch (e) {
-        show(e.message, false);
-        return;
-      }
-      closeEditModal();
-      show('Saved', true);
-      loadMarketAdmin();
-    }
-
     async function toggleVisible() {
       if (!marketAdmin) return;
-      const fields = currentFields();
-      fields.enabled = !fields.enabled;
       try {
-        await saveMarketFields(fields);
+        await call('oc_admin_market_visible', { p_enabled: !marketAdmin.enabled });
       } catch (e) {
         show(e.message, false);
         return;
@@ -1096,6 +1187,15 @@
       }
       loadMarketAdmin();
     }
+
+    $('am-plot').addEventListener('pointerdown', e => {
+      tipActive = true;
+      showTip(e);
+    });
+    $('am-plot').addEventListener('pointermove', e => {
+      if (tipActive) showTip(e);
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(type => $('am-plot').addEventListener(type, hideTip));
 
     async function wipeAll() {
       if (!confirm('Delete ALL data from the database? This cannot be undone.')) return;
