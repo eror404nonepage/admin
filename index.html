@@ -139,42 +139,42 @@
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Cash</span>
-            <span class="flex items-center space-x-2"><span id="i-cash"></span><button onclick="editInfo('info_cash')" aria-label="Edit cash" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-cash"></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Withdraw</span>
-            <span class="flex items-center space-x-2"><span id="i-withdrawn"></span><button onclick="editInfo('info_withdrawn')" aria-label="Edit withdraw" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-withdrawn"></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total USDT</span>
-            <span class="flex items-center space-x-2"><span id="i-usdt"></span><button onclick="editInfo('info_total_usdt')" aria-label="Edit total USDT" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-usdt"></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total One Coin</span>
-            <span class="flex items-center space-x-2"><span id="i-total"></span><button onclick="editInfo('info_total_one')" aria-label="Edit total One Coin" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-total"></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Value</span>
-            <span class="flex items-center space-x-2"><span id="i-value"></span><button onclick="editInfo('info_total_value')" aria-label="Edit total value" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-value"></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>One Coin Price</span>
-            <span class="flex items-center space-x-2"><span id="i-price"></span><button onclick="editPrice()" aria-label="Edit price" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-price"></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total User 24H</span>
-            <span class="flex items-center space-x-2"><span id="i-users24"></span><button onclick="editInfo('info_users_24h')" aria-label="Edit users 24h" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-users24"></span>
           </div>
           <div class="sep"></div>
           <div class="flex justify-between items-center py-3">
             <span>Total User</span>
-            <span class="flex items-center space-x-2"><span id="i-users"></span><button onclick="editInfo('info_users')" aria-label="Edit users" class="pen"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button></span>
+            <span id="i-users"></span>
           </div>
         </div>
       </div>
@@ -411,7 +411,6 @@
     let marketData = null;
     let marketAdmin = null;
     let editCtx = null;
-    let infoData = null;
     let tipActive = false;
 
     const $ = id => document.getElementById(id);
@@ -487,13 +486,7 @@
       return !$('info').classList.contains('hidden');
     }
 
-    function manual(id, key, overrides) {
-      const el = $(id);
-      if (overrides.includes(key)) el.innerText += ' *';
-    }
-
     function renderInfo(i) {
-      infoData = i;
       price = Number(i.price);
       $('i-cash').innerText = fmtUsd(i.cash);
       $('i-withdrawn').innerText = fmtUsd(i.withdrawn);
@@ -501,11 +494,8 @@
       $('i-total').innerText = Number(i.total_one).toLocaleString('en-US', { minimumFractionDigits: 3, maximumFractionDigits: 9 });
       $('i-value').innerText = fmtUsd(i.total_value);
       $('i-price').innerText = fmtPrice(price);
-      $('i-users').innerText = Number(i.users).toLocaleString();
       $('i-users24').innerText = Number(i.users_24h).toLocaleString();
-      [['i-cash', 'info_cash'], ['i-withdrawn', 'info_withdrawn'], ['i-usdt', 'info_total_usdt'], ['i-total', 'info_total_one'],
-       ['i-value', 'info_total_value'], ['i-users', 'info_users'], ['i-users24', 'info_users_24h']]
-        .forEach(([id, key]) => manual(id, key, i.overrides));
+      $('i-users').innerText = Number(i.users).toLocaleString();
     }
 
     async function refreshInfo() {
@@ -896,29 +886,6 @@
 
     function autoEdit() {
       return runEdit(ctx => ctx.clear());
-    }
-
-    const INFO_FIELDS = {
-      info_cash: ['Cash ($)', 'cash'],
-      info_withdrawn: ['Withdraw ($)', 'withdrawn'],
-      info_total_one: ['Total One Coin', 'total_one'],
-      info_total_usdt: ['Total USDT', 'total_usdt'],
-      info_total_value: ['Total value ($)', 'total_value'],
-      info_users: ['Users', 'users'],
-      info_users_24h: ['Users (24h)', 'users_24h']
-    };
-
-    function editInfo(key) {
-      if (!infoData) return;
-      const [title, field] = INFO_FIELDS[key];
-      openEdit({
-        title,
-        mode: 'decimal',
-        value: plain(infoData[field]),
-        save: v => call('oc_admin_override', { p_key: key, p_value: v }),
-        clear: () => call('oc_admin_override', { p_key: key, p_value: null }),
-        done: refreshInfo
-      });
     }
 
     function editPrice() {
