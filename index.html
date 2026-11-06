@@ -247,11 +247,10 @@
       <div id="withdraw-list" class="space-y-2"></div>
     </div>
 
-
     <div id="page-market" class="hidden space-y-3" data-dir="up">
       <div class="panel p-3 flex items-center justify-between">
         <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 border border-gray-400 flex items-center justify-center text-lg text-white">1</div>
+          <div id="am-logo" class="w-10 h-10 border border-gray-400 flex items-center justify-center text-lg text-white overflow-hidden">1</div>
           <div>
             <div class="text-base text-white">ONE</div>
             <div class="text-xs text-gray-400">OneCoin</div>
@@ -422,7 +421,8 @@
         body: JSON.stringify(args)
       });
       const text = await res.text();
-      const data = text ? JSON.parse(text) : null;
+      let data = null;
+      try { data = text ? JSON.parse(text) : null; } catch (e) {}
       if (!res.ok) {
         const message = (data && data.message) || 'Request failed';
         if (message === 'Admin session expired') lock();
@@ -529,7 +529,7 @@
       if (name === 'requests') loadRequests();
       if (name === 'withdraw') loadWithdrawals();
       if (name === 'user') renderUser();
-      if (name === 'market') loadMarketAdmin();
+      if (name === 'market') reloadMarket();
     }
 
     function openPage(name) {
@@ -544,6 +544,7 @@
       if (page === 'home' && infoOpen()) refreshInfo();
       if (page === 'withdraw') loadWithdrawals();
       if (page === 'requests') loadRequests();
+      if (page === 'market') loadMarketAdmin();
     }, 5000);
 
     function lock() {
@@ -778,7 +779,6 @@
       if (infoOpen()) refreshInfo();
     }
 
-
     async function grant() {
       if (!amount) {
         show('Select an amount', false);
@@ -787,6 +787,7 @@
       try {
         const balance = await call('oc_admin_grant', { p_user: $('g-user').value, p_amount: amount });
         show(`Activated. One Point balance: ${Number(balance).toLocaleString()}`, true);
+        if (infoOpen()) refreshInfo();
       } catch (e) {
         show(e.message, false);
       }
@@ -974,7 +975,7 @@
         show(e.message, false);
         return;
       }
-      loadMarketAdmin();
+      reloadMarket();
     }
 
     async function stopCalc() {
@@ -985,7 +986,7 @@
         show(e.message, false);
         return;
       }
-      loadMarketAdmin();
+      reloadMarket();
     }
 
     async function backfill() {
@@ -1002,7 +1003,7 @@
         show(e.message, false);
         return;
       }
-      loadMarketAdmin();
+      reloadMarket();
     }
 
     async function loadMarketAdmin() {
@@ -1017,6 +1018,10 @@
       } catch (e) {
         show(e.message, false);
       }
+    }
+
+    function reloadMarket() {
+      loadMarketAdmin();
       loadCalc();
     }
 
@@ -1155,6 +1160,19 @@
       loadMarketAdmin();
     }
 
+    function loadLogo(sources) {
+      if (!sources.length) return;
+      const img = new Image();
+      img.onload = () => {
+        img.className = 'w-full h-full object-contain';
+        img.alt = '';
+        img.draggable = false;
+        $('am-logo').replaceChildren(img);
+      };
+      img.onerror = () => loadLogo(sources.slice(1));
+      img.src = sources[0];
+    }
+
     $('am-plot').addEventListener('pointerdown', e => {
       tipActive = true;
       showTip(e);
@@ -1163,6 +1181,7 @@
       if (tipActive) showTip(e);
     });
     ['pointerup', 'pointercancel', 'pointerleave'].forEach(type => $('am-plot').addEventListener(type, hideTip));
+    loadLogo(['onecoinlogo.HEIC', 'onecoinlogo.png']);
 
     async function wipeAll() {
       if (!confirm('Delete ALL data from the database? This cannot be undone.')) return;
